@@ -1,7 +1,9 @@
 #ifndef VLIQ_H_
 #define VLIQ_H_
 
-typedef double vec_t;
+#include <math.h>
+
+typedef float vec_t;
 
 typedef union
 {
@@ -32,10 +34,24 @@ typedef union
 #define vec3_div(a, b) { a.xyz[0] /= b.xyz[0]; a.xyz[1] /= b.xyz[1]; a.xyz[2] /= b.xyz[2]; }
 #define vec3_div_scalar(a, b) { a.xyz[0] /= b; a.xyz[1] /= b; a.xyz[2] /= b; }
 
-vec_t vec3_distance_squared(vec3_t a, vec3_t b);
+inline vec_t vec3_distance_squared(vec3_t a, vec3_t b)
+{
+	vec_t 	xd = b.scalars.x - a.scalars.x,
+		yd = b.scalars.y - a.scalars.y,
+		zd = b.scalars.z - a.scalars.z;
 
-vec_t vec3_distance(vec3_t a, vec3_t b);
+	return ((xd * xd) + (yd * yd) + (zd * zd));
+}
 
-void vec3_normalize(vec3_t* v);
+inline vec_t vec3_distance(vec3_t a, vec3_t b)
+{
+	return sqrtf(vec3_distance_squared(a, b));
+}
+
+inline void vec3_normalize(vec3_t* v)
+{
+	vec_t magnitude = vec3_magnitude((*v));
+	if(magnitude) vec3_div_scalar((*v), powf(magnitude, 0.5f));
+}
 
 #endif
