@@ -1,8 +1,6 @@
 #ifndef VLIQ_H_
 #define VLIQ_H_
 
-#include <math.h>
-
 typedef double vec_t;
 
 typedef union
