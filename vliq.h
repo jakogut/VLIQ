@@ -6,61 +6,49 @@
 
 typedef float vec_t;
 
-typedef union
-{
-	vec_t xy[2];
-	struct { vec_t x, y; } scalars;
+typedef vec_t vec2_t[2];
+typedef vec_t vec3_t[3];
 
-} vec2_t;
+#define vec2_copy(dest, src) { memcpy(dest, src, sizeof(vec2_t)); }
+#define vec3_copy(dest, src) { memcpy(dest, src, sizeof(vec3_t)); }
 
-typedef union
-{
-	vec_t xyz[3];
-	struct { vec_t x, y, z; } scalars;
+#define vec2_zero(v) { memset(v, 0, sizeof(vec2_t)); }
+#define vec3_zero(v) { memset(v, 0, sizeof(vec3_t)); }
 
-} vec3_t;
-
-
-#define vec2_copy(dest, src) { dest.xy[0] = src.xy[0]; dest.xy[1] = src.xy[1]; }
-#define vec3_copy(dest, src) { dest.xyz[0] = src.xyz[0]; dest.xyz[1] = src.xyz[1]; dest.xyz[2] = src.xyz[2]; }
-
-#define vec2_zero(v) { memset(v.xy,  0, sizeof(vec_t) * 2); }
-#define vec3_zero(v) { memset(v.xyz, 0, sizeof(vec_t) * 3); }
-
-#define vec2_magnitude_squared(v) ((v.xy[0] * v.xy[0]) + (v.xy[1] * v.xy[1]))
-#define vec3_magnitude_squared(v) ((v.xyz[0] * v.xyz[0]) + (v.xyz[1] * v.xyz[1]) + (v.xyz[2] * v.xyz[2]))
+#define vec2_magnitude_squared(v) ((v[0] * v[0]) + (v[1] * v[1]))
+#define vec3_magnitude_squared(v) ((v[0] * v[0]) + (v[1] * v[1]) + (v[2] * v[2]))
 #define vec2_magnitude(v) (sqrtf(vec2_magnitude_squared(v)))
 #define vec3_magnitude(v) (sqrtf(vec3_magnitude_squared(v)))
 
-#define vec2_add(a, b) { a.xy[0] += b.xy[0]; a.xy[1] += b.xy[1]; }
-#define vec2_sub(a, b) { a.xy[0] -= b.xy[0]; a.xy[1] -= b.xy[1]; }
-#define vec2_sub_scalar(a, b) { a.xy[0] -= b; a.xy[1] -= b; }
-#define vec2_mul(a, b) { a.xy[0] *= b.xy[0]; a.xy[1] *= b.xy[1]; }
-#define vec2_mul_scalar(a, b) { a.xy[0] *= b; a.xy[1] *= b; }
-#define vec2_div(a, b) { a.xy[0] /= b.xy[0]; a.xy[1] /= b.xy[1]; }
-#define vec2_div_scalar(a, b) { a.xy[0] /= b; a.xy[1] /= b;}
+#define vec2_add(a, b) { a[0] += b[0]; a[1] += b[1]; }
+#define vec2_sub(a, b) { a[0] -= b[0]; a[1] -= b[1]; }
+#define vec2_sub_scalar(a, b) { a[0] -= b; a[1] -= b; }
+#define vec2_mul(a, b) { a[0] *= b[0]; a[1] *= b[1]; }
+#define vec2_mul_scalar(a, b) { a[0] *= b; a[1] *= b; }
+#define vec2_div(a, b) { a[0] /= b[0]; a[1] /= b[1]; }
+#define vec2_div_scalar(a, b) { a[0] /= b; a[1] /= b;}
 
-#define vec3_add(a, b) { a.xyz[0] += b.xyz[0]; a.xyz[1] += b.xyz[1]; a.xyz[2] += b.xyz[2]; }
-#define vec3_sub(a, b) { a.xyz[0] -= b.xyz[0]; a.xyz[1] -= b.xyz[1]; a.xyz[2] -= b.xyz[2]; }
-#define vec3_sub_scalar(a, b) { a.xyz[0] -= b; a.xyz[1] -= b; a.xyz[2] -= b; }
-#define vec3_mul(a, b) { a.xyz[0] *= b.xyz[0]; a.xyz[1] *= b.xyz[1]; a.xyz[2] *= b.xyz[2]; }
-#define vec3_mul_scalar(a, b) { a.xyz[0] *= b; a.xyz[1] *= b; a.xyz[2] *= b; }
-#define vec3_div(a, b) { a.xyz[0] /= b.xyz[0]; a.xyz[1] /= b.xyz[1]; a.xyz[2] /= b.xyz[2]; }
-#define vec3_div_scalar(a, b) { a.xyz[0] /= b; a.xyz[1] /= b; a.xyz[2] /= b; }
+#define vec3_add(a, b) { a[0] += b[0]; a[1] += b[1]; a[2] += b[2]; }
+#define vec3_sub(a, b) { a[0] -= b[0]; a[1] -= b[1]; a[2] -= b[2]; }
+#define vec3_sub_scalar(a, b) { a[0] -= b; a[1] -= b; a[2] -= b; }
+#define vec3_mul(a, b) { a[0] *= b[0]; a[1] *= b[1]; a[2] *= b[2]; }
+#define vec3_mul_scalar(a, b) { a[0] *= b; a[1] *= b; a[2] *= b; }
+#define vec3_div(a, b) { a[0] /= b[0]; a[1] /= b[1]; a[2] /= b[2]; }
+#define vec3_div_scalar(a, b) { a[0] /= b; a[1] /= b; a[2] /= b; }
 
 inline vec_t vec2_distance_squared(vec2_t a, vec2_t b)
 {
-	vec_t 	xd = b.scalars.x - a.scalars.x,
-		yd = b.scalars.y - a.scalars.y;
+	vec_t 	xd = b[0] - a[0],
+		yd = b[1] - a[1];
 
 	return ((xd * xd) + (yd * yd));
 }
 
 inline vec_t vec3_distance_squared(vec3_t a, vec3_t b)
 {
-	vec_t 	xd = b.scalars.x - a.scalars.x,
-		yd = b.scalars.y - a.scalars.y,
-		zd = b.scalars.z - a.scalars.z;
+	vec_t 	xd = b[0] - a[0],
+		yd = b[1] - a[1],
+		zd = b[2] - a[2];
 
 	return ((xd * xd) + (yd * yd) + (zd * zd));
 }
