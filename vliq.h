@@ -66,13 +66,13 @@ inline vec_t vec3_distance(vec3_t a, vec3_t b)
 inline void vec2_normalize(vec2_t* v)
 {
 	vec_t magnitude = vec2_magnitude((*v));
-	if(magnitude) vec2_div_scalar((*v), powf(magnitude, 0.5f));
+	if(magnitude) vec2_div_scalar((*v), magnitude);
 }
 
 inline void vec3_normalize(vec3_t* v)
 {
 	vec_t magnitude = vec3_magnitude((*v));
-	if(magnitude) vec3_div_scalar((*v), powf(magnitude, 0.5f));
+	if(magnitude) vec3_div_scalar((*v), magnitude);
 }
 
 #endif
